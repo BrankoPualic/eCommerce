@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/gateway/">
+    <Project Path="eCommerce.Gateway.Api/eCommerce.Gateway.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/services/">
+    <Project Path="eCommerce.Users.Api/eCommerce.Users.Api.csproj" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+</Solution>
