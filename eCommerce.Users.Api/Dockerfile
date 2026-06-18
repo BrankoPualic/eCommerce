@@ -11,6 +11,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["eCommerce.Users.Api/eCommerce.Users.Api.csproj", "eCommerce.Users.Api/"]
+COPY ["Directory.Build.props", "eCommerce.Users.Api/"]
 RUN dotnet restore "./eCommerce.Users.Api/./eCommerce.Users.Api.csproj"
 COPY . .
 WORKDIR "/src/eCommerce.Users.Api"

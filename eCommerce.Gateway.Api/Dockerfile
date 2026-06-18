@@ -10,6 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["eCommerce.Gateway.Api/eCommerce.Gateway.Api.csproj", "eCommerce.Gateway.Api/"]
+COPY ["Directory.Build.props", "eCommerce.Gateway.Api/"]
 RUN dotnet restore "./eCommerce.Gateway.Api/./eCommerce.Gateway.Api.csproj"
 COPY . .
 WORKDIR "/src/eCommerce.Gateway.Api"
