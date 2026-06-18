@@ -16,3 +16,10 @@
 ## Version control
 
 .git/
+
+
+## Storage
+
+*.db
+*.db-shm
+*.db-wal
