@@ -9,10 +9,10 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["eCommerce.Gateway.Api.csproj", "."]
-RUN dotnet restore "./eCommerce.Gateway.Api.csproj"
+COPY ["eCommerce.Gateway.Api/eCommerce.Gateway.Api.csproj", "eCommerce.Gateway.Api/"]
+RUN dotnet restore "./eCommerce.Gateway.Api/./eCommerce.Gateway.Api.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/eCommerce.Gateway.Api"
 RUN dotnet build "./eCommerce.Gateway.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

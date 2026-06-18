@@ -1,20 +1,20 @@
 services:
   ecommerce.gateway.api:
     image: ${DOCKER_REGISTRY-}ecommercegatewayapi
+    container_name: ecommerce.gateway.api
     build:
-      context: eCommerce.Gateway.Api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: eCommerce.Gateway.Api/Dockerfile
     ports:
       - 5000:5000
-    environment:
-      ASPNETCORE_URLS: http://+:5000
+      - 5001:5001 
 
   ecommerce.users.api:
     image: ${DOCKER_REGISTRY-}ecommerceusersapi
+    container_name: ecommerce.users.api
     build:
-      context: eCommerce.Users.Api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: eCommerce.Users.Api/Dockerfile
     ports:
       - 5100:5100
-    environment:
-      ASPNETCORE_URLS: http://+:5100
+      - 5101:5101
