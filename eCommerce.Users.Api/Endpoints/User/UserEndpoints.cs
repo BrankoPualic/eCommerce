@@ -3,6 +3,7 @@ using eCommerce.Users.Api.Infrastructure.Persistence;
 using eCommerce.Users.Api.Infrastructure.Queries;
 using eCommerce.Users.Api.Interfaces;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Users.Api.Endpoints;
 
@@ -51,8 +52,25 @@ public static class UserEndpoints
 		return Results.Created($"/users/{user.PublicId}", user.PublicId.Value);
 	}
 
-	private static async Task<IResult> UpdateUser(Guid id, CancellationToken ct = default)
+	private static async Task<IResult> UpdateUser(Guid id, UpdateUserRequest request, DatabaseContext context, CancellationToken ct = default)
 	{
+		var userId = new User.UserId(id);
+		var user = await context.Users.FirstOrDefaultAsync(_ => _.PublicId == userId, ct);
+
+		if (user == null)
+			return Results.NotFound();
+
+		user.Update(
+			request.FirstName,
+			request.MiddleName,
+			request.LastName,
+			request.Gender,
+			request.Email,
+			request.IsActive
+		);
+
+		await context.SaveChangesAsync(ct);
+
 		return Results.NoContent();
 	}
 

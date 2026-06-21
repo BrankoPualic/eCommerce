@@ -84,5 +84,26 @@ public class User
 		return new(firstName, lastName, gender, email, password, isActive, middleName);
 	}
 
+	public void Update(string? firstName, string? middleName, string? lastName, Gender? gender, string? email, bool? isActive)
+	{
+		if (!string.IsNullOrWhiteSpace(firstName))
+			FirstName = firstName;
+
+		if (!string.IsNullOrWhiteSpace(middleName))
+			MiddleName = middleName;
+
+		if (!string.IsNullOrWhiteSpace(lastName))
+			LastName = lastName;
+
+		if (gender != null && Enum.IsDefined((Gender)gender))
+			Gender = (Gender)gender;
+
+		if (!string.IsNullOrWhiteSpace(email))
+			Email = email;
+
+		if (isActive.HasValue)
+			IsActive = isActive.Value;
+	}
+
 	#endregion Methods
 }

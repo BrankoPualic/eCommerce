@@ -3,3 +3,5 @@
 namespace eCommerce.Users.Api.Endpoints;
 
 public record CreateUserRequest(string FirstName, string LastName, Gender Gender, string Email, string Password, string ConfirmPassword, bool IsActive, string? MiddleName);
+
+public record UpdateUserRequest(string? FirstName, string? MiddleName, string? LastName, Gender? Gender, string? Email, bool? IsActive);
