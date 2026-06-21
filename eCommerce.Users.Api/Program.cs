@@ -1,5 +1,6 @@
 using eCommerce.Users.Api.Endpoints;
 using eCommerce.Users.Api.Infrastructure.Persistence;
+using eCommerce.Users.Api.Infrastructure.Queries;
 using eCommerce.Users.Api.Interfaces;
 using eCommerce.Users.Api.Services;
 using FluentValidation;
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite(buil
 
 builder.Services.AddTransient<IValidator<CreateUserRequest>, CreateUserRequestValidator>();
 builder.Services.AddTransient<IUserManager, UserManager>();
+builder.Services.AddTransient<IUserQueries, UserQueries>();
 
 var app = builder.Build();
 

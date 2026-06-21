@@ -1,5 +1,6 @@
 ﻿using eCommerce.Users.Api.Domain;
 using eCommerce.Users.Api.Infrastructure.Persistence;
+using eCommerce.Users.Api.Infrastructure.Queries;
 using eCommerce.Users.Api.Interfaces;
 using FluentValidation;
 
@@ -18,17 +19,16 @@ public static class UserEndpoints
 		group.MapDelete("/{id}", DeleteUser);
 	}
 
-	private static async Task<IResult> GetUsers(CancellationToken ct = default)
+	private static async Task<UserResponse[]> GetUsers(IUserQueries queries, CancellationToken ct = default) => await queries.GetUsersAsync(ct);
+
+	private static async Task<IResult> GetUser(Guid id, IUserQueries queries, CancellationToken ct = default)
 	{
-		return Results.Ok();
+		return await queries.GetUserAsync(id, ct) is UserResponse response
+			? Results.Ok(response)
+			: Results.NotFound();
 	}
 
-	private static async Task<IResult> GetUser(Guid id, CancellationToken ct = default)
-	{
-		return Results.Ok();
-	}
-
-	private static async Task<IResult> CreateUser(CreateUserRequest request, IValidator<CreateUserRequest> validator, DatabaseContext db, IUserManager userManager, CancellationToken ct = default)
+	private static async Task<IResult> CreateUser(CreateUserRequest request, IValidator<CreateUserRequest> validator, DatabaseContext context, IUserManager userManager, CancellationToken ct = default)
 	{
 		var validation = validator.Validate(request);
 
@@ -45,8 +45,8 @@ public static class UserEndpoints
 			request.MiddleName
 		);
 
-		db.Users.Add(user);
-		await db.SaveChangesAsync(ct);
+		context.Users.Add(user);
+		await context.SaveChangesAsync(ct);
 
 		return Results.Created($"/users/{user.PublicId}", user.PublicId.Value);
 	}
