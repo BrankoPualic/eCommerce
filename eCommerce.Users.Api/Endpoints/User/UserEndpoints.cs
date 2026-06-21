@@ -74,8 +74,12 @@ public static class UserEndpoints
 		return Results.NoContent();
 	}
 
-	private static async Task<IResult> DeleteUser(Guid id, CancellationToken ct = default)
+	private static async Task<IResult> DeleteUser(Guid id, DatabaseContext context, CancellationToken ct = default)
 	{
+		var userId = new User.UserId(id);
+
+		await context.Users.Where(_ => _.PublicId == userId).ExecuteDeleteAsync(ct);
+
 		return Results.NoContent();
 	}
 }
